@@ -1,12 +1,27 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-string encriptString(string s, int n) {
+string convertIP(long long num) {
 
-	for (int i = 0; i < s.size(); i++)
+	string s;
+	long long bytePart[4];
+
+	for (int i = 0; i < 4; i++)
 	{
-		char c = (s[i] + n) % 256;
-		s[i] = c;
+		long long exponent = pow(2, 8 * (i + 1));
+		bytePart[i] = num % exponent;
+
+		num = (num - bytePart[i]) / 256;
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		s.append(to_string(bytePart[3 - i]));
+		if (i < 3)
+		{
+			s.append(".");
+		}
 	}
 
 	return s;
@@ -14,8 +29,9 @@ string encriptString(string s, int n) {
 
 int main()
 {
-	string s = "abcd";
-	s = encriptString(s, 4);
+	long long num = 256;
+	string s = convertIP(num);
 
-	cout << s;
+	cout << endl << s;
+
 }
