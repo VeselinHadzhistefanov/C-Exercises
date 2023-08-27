@@ -1,42 +1,47 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 /*
-"255.255.255.255" => 4228250625
-"0.0.0.1" => 1
-"0.0.1.1" => 257
+5 => 5
+10 => a
+16 => 10
+255 => ff
  */
 
-long long convertFromIP(string s) {
+string convert16System(int num) {
 
-	long long IPNum = 0;
+	vector<int> elements;
 
-	for (int i = 0; i < 4; i++) {
-		const int n = s.find_last_of('.');
-		string element = s.substr(n + 1, s.size());
+	int i = 0;
+	while (num > 0 && i < 16) {
+		long long exponent = pow(16, i + 1);
+		int element = num % exponent;
 
-		if (element.size() > 3 || element.size() == 0) {
-			throw(new exception("Invalid input!"));
-		}
+		elements.push_back(element);
+		num = (num - element) / 16;
 
-		int num = stoi(element);
-		if (num > 255 || num < 0) {
-			throw(new exception("Invalid input!"));
-		}
-
-		const long long exponent = pow(2, 8 * i);
-
-		s = s.substr(0, n);
-		IPNum += num * exponent;
+		i++;
 	}
 
-	return IPNum;
+	char chars[] = { 0, 1, 2, 3,4, 5,6,7,8,9,'a', 'b', 'c', 'd', 'e', 'f' };
+
+	string s;
+
+	for (int i = 0; i < elements.size(); i++) {
+		int n = elements[elements.size() - 1 - i];
+		char c = chars[n];
+
+		s.push_back(c);
+	}
+
+	return s;
 }
 
 int main() {
-	cout << convertFromIP("255.255.255.255") << endl;
-	cout << convertFromIP("0.0.0.1") << endl;
-	cout << convertFromIP("0.0.1.1") << endl;
-
+	cout << convert16System(5) << endl;
+	cout << convert16System(10) << endl;
+	cout << convert16System(16) << endl;
+	cout << convert16System(255) << endl;
 }
