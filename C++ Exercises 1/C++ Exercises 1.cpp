@@ -2,36 +2,41 @@
 #include <string>
 using namespace std;
 
-string convertIP(long long num) {
+/*
+"255.255.255.255" => 4228250625
+"0.0.0.1" => 1
+"0.0.1.1" => 257
+ */
 
-	string s;
-	long long bytePart[4];
+long long convertFromIP(string s) {
 
-	for (int i = 0; i < 4; i++)
-	{
-		long long exponent = pow(2, 8 * (i + 1));
-		bytePart[i] = num % exponent;
+	long long IPNum = 0;
 
-		num = (num - bytePart[i]) / 256;
-	}
+	for (int i = 0; i < 4; i++) {
+		const int n = s.find_last_of('.');
+		string element = s.substr(n + 1, s.size());
 
-	for (int i = 0; i < 4; i++)
-	{
-		s.append(to_string(bytePart[3 - i]));
-		if (i < 3)
-		{
-			s.append(".");
+		if (element.size() > 3 || element.size() == 0) {
+			throw(new exception("Invalid input!"));
 		}
+
+		int num = stoi(element);
+		if (num > 255 || num < 0) {
+			throw(new exception("Invalid input!"));
+		}
+
+		const long long exponent = pow(2, 8 * i);
+
+		s = s.substr(0, n);
+		IPNum += num * exponent;
 	}
 
-	return s;
+	return IPNum;
 }
 
-int main()
-{
-	long long num = 256;
-	string s = convertIP(num);
-
-	cout << endl << s;
+int main() {
+	cout << convertFromIP("255.255.255.255") << endl;
+	cout << convertFromIP("0.0.0.1") << endl;
+	cout << convertFromIP("0.0.1.1") << endl;
 
 }
