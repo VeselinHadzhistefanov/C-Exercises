@@ -1,27 +1,30 @@
 #include <iostream>
-#include <string>
+#include <vector>
+#include <numeric>
 using namespace std;
 
-string getDuplicates(string a, string b) {
-	string chars = "";
+vector<int> reverseArray(vector<int>& arr) {
 
-	for (char c1 : a) {
-		if (b.find(c1) < b.length()) {
-			if (chars.find(c1) >= chars.length()) {
-				chars.append(string(1, c1));
-			}
-		}
+	for (int i = 0; i < arr.size() / 2 + 1; i++)
+	{
+		const int temp = arr[i];
+		arr[i] = arr[arr.size() - i - 1];
+		arr[arr.size() - i - 1] = temp;
 	}
 
-	return chars;
+	return arr;
 }
-
 
 int main()
 {
-	cout << getDuplicates("abc", "def");
-	cout << getDuplicates("abc", "cde");
-	cout << getDuplicates("abc", "dafc");
-	cout << getDuplicates("abca", "deaf");
+	vector<int> arr(10);
 
+	iota(arr.begin(), arr.end(), 0);
+
+	arr = reverseArray(arr);
+
+	for (const int i : arr)
+	{
+		cout << i << " ";
+	}
 }
