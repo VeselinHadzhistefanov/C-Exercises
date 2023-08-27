@@ -1,29 +1,21 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-vector<int> getCurrentSum(vector<int>& arr) {
+string encriptString(string s, int n) {
 
-	vector<int> currentSum(arr.size());
-
-	int sum = 0;
-	for (int i = 0; i < arr.size(); i++)
+	for (int i = 0; i < s.size(); i++)
 	{
-		sum += arr[i];
-		currentSum[i] = sum;
+		char c = (s[i] + n) % 256;
+		s[i] = c;
 	}
 
-	return currentSum;
+	return s;
 }
 
 int main()
 {
-	vector<int> arr{ 1, 2, 3, 4, 5 };
+	string s = "abcd";
+	s = encriptString(s, 4);
 
-	arr = getCurrentSum(arr);
-
-	for (int i : arr)
-	{
-		cout << i << " ";
-	}
+	cout << s;
 }
