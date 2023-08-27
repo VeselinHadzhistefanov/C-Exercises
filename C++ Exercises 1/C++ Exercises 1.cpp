@@ -1,29 +1,28 @@
 #include <iostream>
 #include <vector>
-#include <numeric>
 using namespace std;
 
-vector<int> reverseArray(vector<int>& arr) {
+vector<int> getCurrentSum(vector<int>& arr) {
 
-	for (int i = 0; i < arr.size() / 2 + 1; i++)
+	vector<int> currentSum(arr.size());
+
+	int sum = 0;
+	for (int i = 0; i < arr.size(); i++)
 	{
-		const int temp = arr[i];
-		arr[i] = arr[arr.size() - i - 1];
-		arr[arr.size() - i - 1] = temp;
+		sum += arr[i];
+		currentSum[i] = sum;
 	}
 
-	return arr;
+	return currentSum;
 }
 
 int main()
 {
-	vector<int> arr(10);
+	vector<int> arr{ 1, 2, 3, 4, 5 };
 
-	iota(arr.begin(), arr.end(), 0);
+	arr = getCurrentSum(arr);
 
-	arr = reverseArray(arr);
-
-	for (const int i : arr)
+	for (int i : arr)
 	{
 		cout << i << " ";
 	}
