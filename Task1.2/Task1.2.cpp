@@ -21,5 +21,4 @@ int main() {
 	cout << getDuplicates("abc", "cde");
 	cout << getDuplicates("abc", "dafc");
 	cout << getDuplicates("abca", "deaf");
-
 }
