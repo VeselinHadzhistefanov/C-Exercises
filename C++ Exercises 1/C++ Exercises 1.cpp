@@ -1,23 +1,47 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
-int main()
-{
-    for (int i = 0; i < 100; i++) {
-        
-        if (i % 3 == 0) {
-            cout << "git";
-        }
+/*
+5 => 5
+10 => a
+16 => 10
+255 => ff
+ */
 
-        if (i % 5 == 0) {
-            cout << "hub";
-        }
+string convert16System(int num) {
 
-        if (i % 3 != 0 && i % 5 != 0) {
-            cout << to_string(i);
-        }
+	vector<int> elements;
 
-        cout << endl;
-    }
+	int i = 0;
+	while (num > 0 && i < 16) {
+		long long exponent = pow(16, i + 1);
+		int element = num % exponent;
+
+		elements.push_back(element);
+		num = (num - element) / 16;
+
+		i++;
+	}
+
+	char chars[] = { 0, 1, 2, 3,4, 5,6,7,8,9,'a', 'b', 'c', 'd', 'e', 'f' };
+
+	string s;
+
+	for (int i = 0; i < elements.size(); i++) {
+		int n = elements[elements.size() - 1 - i];
+		char c = chars[n];
+
+		s.push_back(c);
+	}
+
+	return s;
+}
+
+int main() {
+	cout << convert16System(5) << endl;
+	cout << convert16System(10) << endl;
+	cout << convert16System(16) << endl;
+	cout << convert16System(255) << endl;
 }
