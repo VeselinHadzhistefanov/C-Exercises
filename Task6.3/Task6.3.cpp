@@ -11,13 +11,14 @@ using namespace std;
  */
 
 string removeChars(string s) {
-
+	int i = s.size() - 1;
 	int n = 0;
 	string s1;
 
-	for (int i = s.size() - 1; i >= 0; i--) {
+	while (i >= 0) {
 		if (s[i] == '#') {
 			n++;
+			i--;
 			continue;
 		}
 
@@ -30,6 +31,7 @@ string removeChars(string s) {
 			s1.insert(s1.begin(), s[i]);
 		}
 
+		i--;
 	}
 
 	return s1;
